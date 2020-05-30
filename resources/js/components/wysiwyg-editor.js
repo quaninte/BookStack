@@ -422,6 +422,34 @@ class WysiwygEditor {
         this.loadPlugins();
 
         this.tinyMceConfig = this.getTinyMceConfig();
+
+        if (typeof window.codexWaveApiKey !== 'undefined') {
+            // Domain
+            const docId = window.location.hostname + this.pageId;
+            const codexWaveApiKey = window.codexWaveApiKey;
+            const userName = document.getElementsByClassName('avatar')[0].getAttribute("alt");
+            let userAvatar = document.getElementsByClassName('avatar')[0].getAttribute("src");
+
+
+            if (userAvatar.indexOf('user_avatar.png') !== -1) {
+                userAvatar = false;
+            }
+
+            // Add wave live edit plugin
+            const config = {
+                docId : docId,
+                user : {
+                    name : userName,
+                    avatar: userAvatar,
+                },
+                apiKey : codexWaveApiKey,
+            };
+            this.tinyMceConfig.external_plugins = {
+                wave : "https://cdn2.codox.io/waveTinymce/plugin.min.js"
+            };
+            this.tinyMceConfig.wave = config;
+        }
+        
         window.$events.emitPublic(elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
         window.tinymce.init(this.tinyMceConfig);
     }
