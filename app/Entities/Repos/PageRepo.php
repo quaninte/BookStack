@@ -121,6 +121,15 @@ class PageRepo
     }
 
     /**
+     * Get the latest draft copy of the given page.
+     */
+    public function getLatestDraft(Page $page): ?PageRevision
+    {
+        $revision = $this->getDraftQuery($page)->first();
+        return $revision;
+    }
+
+    /**
      * Get a new draft page belonging to the given parent entity.
      */
     public function getNewDraftPage(Entity $parent)
@@ -455,6 +464,16 @@ class PageRepo
     {
         return PageRevision::query()->where('created_by', '=', user()->id)
             ->where('type', 'update_draft')
+            ->where('page_id', '=', $page->id)
+            ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the query to find draft copies of the given page.
+     */
+    protected function getDraftQuery(Page $page)
+    {
+        return PageRevision::query()->where('type', 'update_draft')
             ->where('page_id', '=', $page->id)
             ->orderBy('created_at', 'desc');
     }

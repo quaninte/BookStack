@@ -185,11 +185,13 @@ class PageController extends Controller
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->pageRepo->getUserDraft($page);
-        if ($userDraft !== null) {
-            $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
+        $latestDraft = $this->pageRepo->getLatestDraft($page);
+        if ($latestDraft !== null) {
+            $page->forceFill($latestDraft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
-            $warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
+
+            // Don't show draft warning since we use live collaboration editing already
+            //$warnings[] = $editActivity->getEditingActiveDraftMessage($latestDraft);
         }
 
         if (count($warnings) > 0) {
