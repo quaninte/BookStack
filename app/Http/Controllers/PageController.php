@@ -181,7 +181,8 @@ class PageController extends Controller
         // Check for active editing
         $warnings = [];
         if ($editActivity->hasActiveEditing()) {
-            $warnings[] = $editActivity->activeEditingMessage();
+            // Don't show draft warning since we use live collaboration editing already
+            //$warnings[] = $editActivity->activeEditingMessage();
         }
 
         // Check for a current draft version for this user
