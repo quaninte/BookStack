@@ -185,9 +185,9 @@ class PageController extends Controller
             //$warnings[] = $editActivity->activeEditingMessage();
         }
 
-        // Check for a current draft version for this user
+        // Check for a current draft version (use latest draft if is is updated later than the current page version)
         $latestDraft = $this->pageRepo->getLatestDraft($page);
-        if ($latestDraft !== null) {
+        if ($latestDraft !== null && $latestDraft->updated_at->greaterThan($page->updated_at)) {
             $page->forceFill($latestDraft->only(['name', 'html', 'markdown']));
             $page->isDraft = true;
 
