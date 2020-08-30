@@ -119,7 +119,7 @@
 
             {{--User Actions--}}
             @if(userCan('page-update', $page))
-                <a href="{{ $page->getUrl('/edit') }}" class="icon-list-item">
+                <a href="{{ $page->getEditUrl() }}" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>

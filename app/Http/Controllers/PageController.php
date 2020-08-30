@@ -68,7 +68,7 @@ class PageController extends Controller
             'html' => ''
         ]);
 
-        return redirect($page->getUrl('/edit'));
+        return redirect($page->getEditUrl());
     }
 
     /**
@@ -117,17 +117,28 @@ class PageController extends Controller
      * If the page is not found via the slug the revisions are searched for a match.
      * @throws NotFoundException
      */
-    public function show(string $bookSlug, string $pageSlug)
+    public function show(string $bookSlug, string $pageSlug, int $pageId = null)
     {
-        try {
-            $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
-        } catch (NotFoundException $e) {
-            $page = $this->pageRepo->getByOldSlug($bookSlug, $pageSlug);
+        // If page id is not provided
+        if (!$pageId) {
+            try {
+                $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+            } catch (NotFoundException $e) {
+                $page = $this->pageRepo->getByOldSlug($bookSlug, $pageSlug);
 
-            if ($page === null) {
-                throw $e;
+                if ($page === null) {
+                    throw $e;
+                }
+
             }
 
+            return redirect($page->getUrl());
+        }
+
+        $page = $this->pageRepo->getById($pageId);
+        // Redirect to the correct slug if needed
+        if ($page->getAttribute('book')->getAttribute('slug') !== $bookSlug
+            || $page->getAttribute('slug') !== $pageSlug) {
             return redirect($page->getUrl());
         }
 
@@ -170,9 +181,9 @@ class PageController extends Controller
      * Show the form for editing the specified page.
      * @throws NotFoundException
      */
-    public function edit(string $bookSlug, string $pageSlug)
+    public function edit(string $bookSlug, int $pageId)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         $page->isDraft = false;
@@ -216,12 +227,12 @@ class PageController extends Controller
      * @throws ValidationException
      * @throws NotFoundException
      */
-    public function update(Request $request, string $bookSlug, string $pageSlug)
+    public function update(Request $request, string $bookSlug, int $pageId)
     {
         $this->validate($request, [
             'name' => 'required|string|max:255'
         ]);
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         $this->pageRepo->update($page, $request->all());

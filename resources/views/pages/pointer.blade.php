@@ -6,7 +6,7 @@
             <button class="button outline icon" data-clipboard-target="#pointer-url" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
         </div>
         @if(userCan('page-update', $page))
-            <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
+            <a href="{{ $page->getEditUrl() }}" id="pointer-edit" data-edit-href="{{ $page->getEditUrl() }}"
                class="button primary outline icon heading-edit-icon ml-s px-s" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
         @endif
     </div>

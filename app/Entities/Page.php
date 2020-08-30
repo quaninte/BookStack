@@ -100,9 +100,32 @@ class Page extends BookChild
     {
         $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
         $midText = $this->draft ? '/draft/' : '/page/';
-        $idComponent = $this->draft ? $this->id : urlencode($this->slug);
+
+        if ($this->draft) {
+            $idComponent = $this->id;
+        } else {
+            $idComponent = urlencode($this->slug) . '/' . $this->id;
+        }
 
         $url = '/books/' . urlencode($bookSlug) . $midText . $idComponent;
+        if ($path !== false) {
+            $url .= '/' . trim($path, '/');
+        }
+
+        return url($url);
+    }
+
+    /**
+     * Get the url for this page.
+     * @param string|bool $path
+     * @return string
+     */
+    public function getEditUrl($path = '/edit')
+    {
+        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
+        $midText = $this->draft ? '/draft/' : '/page/';
+
+        $url = '/books/' . urlencode($bookSlug) . $midText . $this->id;
         if ($path !== false) {
             $url .= '/' . trim($path, '/');
         }
