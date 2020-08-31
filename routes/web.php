@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{bookSlug}/create-page', 'PageController@create');
         Route::post('/{bookSlug}/create-guest-page', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
-        Route::post('/{bookSlug}/draft/{pageId}', 'PageController@store');
+        Route::post('/{bookSlug}/draft/{pageId}/edit', 'PageController@store');
         Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageExportController@pdf');
         Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageExportController@html');
         Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageExportController@plainText');
