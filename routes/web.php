@@ -54,29 +54,29 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{bookSlug}/create-guest-page', 'PageController@createAsGuest');
         Route::get('/{bookSlug}/draft/{pageId}', 'PageController@editDraft');
         Route::post('/{bookSlug}/draft/{pageId}/edit', 'PageController@store');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/pdf', 'PageExportController@pdf');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/html', 'PageExportController@html');
-        Route::get('/{bookSlug}/page/{pageSlug}/export/plaintext', 'PageExportController@plainText');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/export/pdf', 'PageExportController@pdf');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/export/html', 'PageExportController@html');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/export/plaintext', 'PageExportController@plainText');
         Route::get('/{bookSlug}/page/{pageId}/edit', 'PageController@edit');
         Route::get('/{bookSlug}/page/{pageSlug}/{pageId?}', 'PageController@show');
-        Route::get('/{bookSlug}/page/{pageSlug}/move', 'PageController@showMove');
-        Route::put('/{bookSlug}/page/{pageSlug}/move', 'PageController@move');
-        Route::get('/{bookSlug}/page/{pageSlug}/copy', 'PageController@showCopy');
-        Route::post('/{bookSlug}/page/{pageSlug}/copy', 'PageController@copy');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/move', 'PageController@showMove');
+        Route::put('/{bookSlug}/page/{pageSlug}/{pageId}/move', 'PageController@move');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/copy', 'PageController@showCopy');
+        Route::post('/{bookSlug}/page/{pageSlug}/{pageId}/copy', 'PageController@copy');
         Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/delete', 'PageController@showDelete');
         Route::get('/{bookSlug}/draft/{pageId}/delete', 'PageController@showDeleteDraft');
-        Route::get('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@showPermissions');
-        Route::put('/{bookSlug}/page/{pageSlug}/permissions', 'PageController@permissions');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/permissions', 'PageController@showPermissions');
+        Route::put('/{bookSlug}/page/{pageSlug}/{pageId}/permissions', 'PageController@permissions');
         Route::put('/{bookSlug}/page/{pageId}/edit', 'PageController@update');
         Route::delete('/{bookSlug}/page/{pageSlug}/{pageId}', 'PageController@destroy');
         Route::delete('/{bookSlug}/draft/{pageId}', 'PageController@destroyDraft');
 
         // Revisions
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions', 'PageRevisionController@index');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}', 'PageRevisionController@show');
-        Route::get('/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', 'PageRevisionController@changes');
-        Route::put('/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', 'PageRevisionController@restore');
-        Route::delete('/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', 'PageRevisionController@destroy');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/revisions', 'PageRevisionController@index');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/revisions/{revId}', 'PageRevisionController@show');
+        Route::get('/{bookSlug}/page/{pageSlug}/{pageId}/revisions/{revId}/changes', 'PageRevisionController@changes');
+        Route::put('/{bookSlug}/page/{pageSlug}/{pageId}/revisions/{revId}/restore', 'PageRevisionController@restore');
+        Route::delete('/{bookSlug}/page/{pageSlug}/{pageId}/revisions/{revId}/delete', 'PageRevisionController@destroy');
 
         // Chapters
         Route::get('/{bookSlug}/chapter/{chapterSlug}/create-page', 'PageController@create');
