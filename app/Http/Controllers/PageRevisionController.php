@@ -37,9 +37,9 @@ class PageRevisionController extends Controller
      * Shows a preview of a single revision.
      * @throws NotFoundException
      */
-    public function show(string $bookSlug, string $pageSlug, int $revisionId)
+    public function show(string $bookSlug, string $pageSlug, int $pageId, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -60,9 +60,9 @@ class PageRevisionController extends Controller
      * Shows the changes of a single revision.
      * @throws NotFoundException
      */
-    public function changes(string $bookSlug, string $pageSlug, int $revisionId)
+    public function changes(string $bookSlug, string $pageSlug, int $pageId, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
         if ($revision === null) {
             throw new NotFoundException();
@@ -87,9 +87,9 @@ class PageRevisionController extends Controller
      * Restores a page using the content of the specified revision.
      * @throws NotFoundException
      */
-    public function restore(string $bookSlug, string $pageSlug, int $revisionId)
+    public function restore(string $bookSlug, string $pageSlug, int $pageId, int $revisionId)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         $page = $this->pageRepo->restoreRevision($page, $revisionId);
@@ -102,9 +102,9 @@ class PageRevisionController extends Controller
      * Deletes a revision using the id of the specified revision.
      * @throws NotFoundException
      */
-    public function destroy(string $bookSlug, string $pageSlug, int $revId)
+    public function destroy(string $bookSlug, string $pageSlug, int $pageId, int $revId)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-delete', $page);
 
         $revision = $page->revisions()->where('id', '=', $revId)->first();
