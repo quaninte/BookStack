@@ -1,5 +1,7 @@
 <?php namespace BookStack\Entities;
 
+use Illuminate\Support\Str;
+
 class SlugGenerator
 {
 
@@ -32,6 +34,8 @@ class SlugGenerator
      */
     protected function formatNameAsSlug(string $name): string
     {
+        $slug = Str::slug($name);
+
         $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', mb_strtolower($name));
         $slug = preg_replace('/\s{2,}/', ' ', $slug);
 

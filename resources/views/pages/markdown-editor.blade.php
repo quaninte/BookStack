@@ -1,4 +1,7 @@
-<div v-pre id="markdown-editor" markdown-editor class="flex-fill flex code-fill">
+<div id="markdown-editor" component="markdown-editor"
+     option:markdown-editor:page-id="{{ $model->id ?? 0 }}"
+     option:markdown-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+     class="flex-fill flex code-fill">
     @exposeTranslations([
         'errors.image_upload_error',
     ])
@@ -32,7 +35,7 @@
         <div class="editor-toolbar">
             <div class="editor-toolbar-label">{{ trans('entities.pages_md_preview') }}</div>
         </div>
-        <iframe srcdoc="" class="markdown-display" sandbox="allow-same-origin"></iframe>
+        <iframe src="about:blank" class="markdown-display" sandbox="allow-same-origin"></iframe>
     </div>
     <input type="hidden" name="html"/>
 
