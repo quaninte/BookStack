@@ -34,9 +34,7 @@ class SlugGenerator
      */
     protected function formatNameAsSlug(string $name): string
     {
-        $slug = Str::slug($name);
-
-        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\:\$\%]/', '', mb_strtolower($name));
+        $slug = preg_replace('/[\+\/\\\?\@\}\{\.\,\=\[\]\#\&\!\*\'\;\$\%]/', '', mb_strtolower($name));
         $slug = preg_replace('/\s{2,}/', ' ', $slug);
 
         $slug = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $slug);
