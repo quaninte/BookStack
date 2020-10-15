@@ -58,7 +58,9 @@
         </nav>
     @endif
 
-    @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @if(strpos($book->name, 'BeeSpecs') === false)
+        @include('partials.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @endif
 @stop
 
 @section('right')
