@@ -15,6 +15,9 @@ Route::get('books/{id}', 'BookApiController@read');
 Route::put('books/{id}', 'BookApiController@update');
 Route::delete('books/{id}', 'BookApiController@delete');
 
+Route::get('books/{bookId}/pages', 'PageApiController@list');
+Route::post('books/{bookId}/pages', 'PageApiController@create');
+
 Route::get('books/{id}/export/html', 'BookExportApiController@exportHtml');
 Route::get('books/{id}/export/pdf', 'BookExportApiController@exportPdf');
 Route::get('books/{id}/export/plaintext', 'BookExportApiController@exportPlainText');
