@@ -9,12 +9,27 @@ if (file_exists($localSettingFile)) {
 
 println('Start migrating');
 
+// Get migrated
+$migratedLogFile = __DIR__ . '/.tmp/migrated.json';
+if (file_exists($migratedLogFile)) {
+    $migratedContent = file_get_contents($migratedLogFile);
+    $migrated = json_decode($migratedContent, true);
+} else {
+    $migrated = [];
+}
+
 // Get files list from input
 $files = getDirContents($settings['dokuwiki_pages_path']);
 
 // Traverse all files
 foreach ($files as $file) {
     println('- Processing for file: ' . $file);
+
+    // Skip if already migrated
+    if (in_array($file, $migrated)) {
+        println('Migrated already ~> skip');
+        continue;
+    }
 
     if (substr($file, -4) === '.txt') {
         // Get name
@@ -62,6 +77,8 @@ foreach ($files as $file) {
         $resData = json_decode($response, true);
 
         if ($resData['id']) {
+            $migrated[] = $file;
+
             println('created succesfully with slug ' . $resData['slug']);
         } else {
             println('failed to create the page');
@@ -70,4 +87,7 @@ foreach ($files as $file) {
     } else {
         println('not a txt file ~> skip.');
     }
+
+    file_put_contents($migratedLogFile, json_encode($migrated));
+    println('Save migrated log file');
 }

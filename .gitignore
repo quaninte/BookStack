@@ -26,4 +26,5 @@ webpack-stats.json
 .DS_Store
 /files
 /migration/*/settings.local.php
+/migration/*/.tmp
 .history
