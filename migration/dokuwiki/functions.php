@@ -30,6 +30,8 @@ function convertDokuWikiToHtml($content) {
 
     // To markdown
     $markdown = $markdownConverter->convert($content);
+    $markdown = str_replace('https///', 'https://', $markdown);
+    $markdown = str_replace('http///', 'http://', $markdown);
 
     // To html
     $html = $parseDownConverter->text($markdown);
