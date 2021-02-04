@@ -1,4 +1,4 @@
-<?php namespace BookStack\Entities;
+<?php namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\Attachment;
