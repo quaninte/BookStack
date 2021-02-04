@@ -134,24 +134,6 @@ class Page extends BookChild
     }
 
     /**
-     * Get the url for this page.
-     * @param string|bool $path
-     * @return string
-     */
-    public function getEditUrl($path = '/edit')
-    {
-        $bookSlug = $this->getAttribute('bookSlug') ? $this->getAttribute('bookSlug') : $this->book->slug;
-        $midText = $this->draft ? '/draft/' : '/page/';
-
-        $url = '/books/' . urlencode($bookSlug) . $midText . $this->id;
-        if ($path !== false) {
-            $url .= '/' . trim($path, '/');
-        }
-
-        return url($url);
-    }
-
-    /**
      * Get the current revision for the page if existing
      * @return PageRevision|null
      */
