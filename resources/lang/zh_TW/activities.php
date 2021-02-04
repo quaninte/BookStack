@@ -45,4 +45,5 @@ return [
 
     // Other
     'commented_on'                => '評論',
+    'permissions_update'          => '更新權限',
 ];
